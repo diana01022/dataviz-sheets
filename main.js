@@ -38,6 +38,11 @@ async function drawCharts() {
   draw('steps', 'bar', 'Steps', [
     { label: first.name, data: steps },
   ]);
+  const minutes = readings(first, 'screen_total_min');
+
+draw('minutes', 'line', 'Minutes', [
+  { label: first.name, data: minutes },
+]);
 }
 
 drawCharts().catch(error => {

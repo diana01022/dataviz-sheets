@@ -1,29 +1,62 @@
+
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Class activity</title>
-    <link rel="stylesheet" href="./style.css">
-  </head>
-  <body>
-    <h1>Class activity</h1>
-    <a href="/api/data">View full JSON</a>
-    <h2>Daily steps</h2>
-    <canvas id="steps" aria-label="Daily steps" role="img"></canvas>
-    <h2>Daily screen time</h2>
-<canvas id="minutes" aria-label="Daily screen time" role="img"></canvas>
-<h2>Steps by participant</h2>
-<canvas id="all-steps" aria-label="Steps by participant" role="img"></canvas>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Class Activity Dashboard</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
 
-<h2>Screen time by participant</h2>
-<canvas id="all-minutes" aria-label="Screen minutes by participant" role="img"></canvas>
-<h2>Total class steps per day</h2>
-<canvas id="total" aria-label="Total class steps by date" role="img"></canvas>
+  <main>
+    <section id="home-page">
+      <h1>Class Activity Dashboard</h1>
+      <p>Choose a participant to explore their activity.</p>
 
-<h2>Mean steps per participant per day</h2>
-<canvas id="mean" aria-label="Mean steps per participant by date" role="img"></canvas>   
-<p id="error" role="alert"></p>
-    <script type="module" src="./main.js"></script>
-  </body>
+      <div id="participants" class="participants"></div>
+
+      <section class="leaderboards">
+        <div class="leaderboard">
+          <h2>🏆 Steps leaderboard</h2>
+          <ol id="steps-leaderboard"></ol>
+        </div>
+
+        <div class="leaderboard">
+          <h2>🏆 Screen time leaderboard</h2>
+          <ol id="screen-leaderboard"></ol>
+        </div>
+      </section>
+
+      <h2>Class comparison</h2>
+
+      <h3>Steps by participant</h3>
+      <canvas id="all-steps" aria-label="Steps by participant" role="img"></canvas>
+
+      <h3>Screen time by participant</h3>
+      <canvas id="all-minutes" aria-label="Screen time by participant" role="img"></canvas>
+
+      <h3>Total class steps per day</h3>
+      <canvas id="total" aria-label="Total class steps" role="img"></canvas>
+
+      <h3>Average steps per participant</h3>
+      <canvas id="mean" aria-label="Average steps" role="img"></canvas>
+    </section>
+
+    <section id="profile-page" hidden>
+      <button id="back-button">← Back to class</button>
+      <h1 id="profile-name"></h1>
+
+      <h2>Daily steps</h2>
+      <canvas id="steps" aria-label="Daily steps" role="img"></canvas>
+
+      <h2>Daily screen time</h2>
+      <canvas id="minutes" aria-label="Daily screen time" role="img"></canvas>
+    </section>
+
+    <p id="error" role="alert"></p>
+  </main>
+
+  <script type="module" src="./main.js"></script>
+</body>
 </html>

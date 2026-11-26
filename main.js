@@ -27,6 +27,31 @@ function draw(id, type, unit, datasets) {
   });
 }
 
+function participantDatasets(sheets, metric) {
+  const dates = new Set();
+
+  const participants = sheets.map(sheet => {
+    const byDate = new Map();
+
+    for (const { date, value } of readings(sheet, metric)) {
+      dates.add(date);
+      byDate.set(date, value);
+    }
+
+    return { name: sheet.name, byDate };
+  });
+
+  const calendar = [...dates].sort();
+
+  return participants.map(({ name, byDate }) => ({
+    label: name,
+    data: calendar.map(date => ({
+      date,
+      value: byDate.get(date) ?? null,
+    })),
+  }));
+}
+
 async function drawCharts() {
   const response = await fetch('/api/data');
   const sheets = await response.json();
@@ -35,14 +60,20 @@ async function drawCharts() {
   const first = sheets[0];
 
   const steps = readings(first, 'steps_count');
+
   draw('steps', 'bar', 'Steps', [
     { label: first.name, data: steps },
   ]);
+
   const minutes = readings(first, 'screen_total_min');
 
-draw('minutes', 'line', 'Minutes', [
-  { label: first.name, data: minutes },
-]);
+  draw('minutes', 'line', 'Minutes', [
+    { label: first.name, data: minutes },
+  ]);
+
+  draw('all-steps', 'line', 'Steps', participantDatasets(sheets, 'steps_count'));
+
+  draw('all-minutes', 'line', 'Minutes', participantDatasets(sheets, 'screen_total_min'));
 }
 
 drawCharts().catch(error => {
